@@ -1,8 +1,11 @@
+import 'package:chat_demo_app/helpers/show_alerts.dart';
+import 'package:chat_demo_app/services/auth_service.dart';
 import 'package:chat_demo_app/widgets/custom_button_1.dart';
 import 'package:chat_demo_app/widgets/custom_input_text_field.dart';
 import 'package:chat_demo_app/widgets/login_labels.dart';
 import 'package:chat_demo_app/widgets/logo_login.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterPage extends StatelessWidget {
   const RegisterPage({super.key});
@@ -62,6 +65,7 @@ class __RegisterFormState extends State<_RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    final authServiceProvider = Provider.of<AuthService>(context);
     return Container(
       margin: EdgeInsets.only(
         top: 20,
@@ -70,7 +74,7 @@ class __RegisterFormState extends State<_RegisterForm> {
       child: Column(children: [
         CustomInputTextField(
           keyboardType: TextInputType.text,
-          textEditingController: emailInputController,
+          textEditingController: nameInputController,
           hint: 'User Name',
           prefixIcon: Icon(Icons.perm_identity),
         ),
@@ -96,9 +100,22 @@ class __RegisterFormState extends State<_RegisterForm> {
         ),
         CustomButton1(
           label: 'Register',
-          onPressed: () {
-            print('hello');
-          },
+          onPressed: authServiceProvider.authenticating
+              ? null
+              : () async {
+                  bool registerOk = await authServiceProvider.register(
+                      nameInputController.text,
+                      emailInputController.text,
+                      passwordInputController.text);
+                  if (registerOk) {
+                    Navigator.pushReplacementNamed(context, 'users');
+                  } else {
+                    showAlert(
+                        context: context,
+                        title: 'Could not register ',
+                        subtitle: '');
+                  }
+                },
         )
       ]),
     );

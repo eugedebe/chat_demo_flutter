@@ -1,4 +1,5 @@
 import 'package:chat_demo_app/models/user.dart';
+import 'package:chat_demo_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -7,19 +8,19 @@ class UsersPage extends StatefulWidget {
   final users = [
     User(
       email: 'maria@fdsfd.com',
-      iod: '1',
+      uid: '1',
       name: 'Maria',
       online: true,
     ),
     User(
       email: 'peter@fdsfd.com',
-      iod: '2',
+      uid: '2',
       name: 'Peter',
       online: true,
     ),
     User(
       email: 'francine@fdsfd.com',
-      iod: '3',
+      uid: '3',
       name: 'francine',
       online: false,
     ),
@@ -50,8 +51,15 @@ class _UsersPageState extends State<UsersPage> {
           ),
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () {},
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              //TODO: DISCONNECT FROM SOCKET SERVER
+              AuthService.deleteToken();
+              Navigator.pushReplacementNamed(context, 'login');
+            },
           ),
           actions: [
             Container(

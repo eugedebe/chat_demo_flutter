@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class CustomButton1 extends StatelessWidget {
   String label;
   var onPressed;
+  TextStyle? labelTextStyle;
   CustomButton1({
     required this.label,
+    this.labelTextStyle,
     this.onPressed,
     super.key,
   });
@@ -21,7 +23,7 @@ class CustomButton1 extends StatelessWidget {
             child: Center(
                 child: Text(
               label,
-              style: TextStyle(color: Colors.white, fontSize: 20),
+              style: labelTextStyle,
             ))));
   }
 }

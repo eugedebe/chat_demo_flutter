@@ -16,6 +16,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    super.dispose();
     // TODO: implement dispose
     for (ChatMessage message in _conversationHistory) {
       message.animationController.dispose();
@@ -28,7 +29,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
       appBar: AppBar(
         elevation: 1,
         centerTitle: true,
-        title: Column(
+        title: const Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircleAvatar(
@@ -54,12 +55,12 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
         children: [
           Flexible(
               child: ListView.builder(
-            physics: BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemCount: _conversationHistory.length,
             itemBuilder: (_, i) => _conversationHistory[i],
             reverse: true,
           )),
-          Divider(
+          const Divider(
             height: 1,
           ),
           _InputChat(
@@ -68,7 +69,7 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
                 text: text,
                 uid: '123',
                 animationController: AnimationController(
-                    vsync: this, duration: Duration(milliseconds: 500)),
+                    vsync: this, duration: const Duration(milliseconds: 500)),
               );
               _conversationHistory.insert(0, newMessage);
               newMessage.animationController.forward();
@@ -81,7 +82,9 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
   }
 }
 
+// ignore: must_be_immutable
 class _InputChat extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   var onSubmitteMessage;
   _InputChat({
     required this.onSubmitteMessage,
@@ -97,7 +100,6 @@ class _InputChatState extends State<_InputChat> {
   late FocusNode _focusNode;
   @override
   void initState() {
-    // TODO: implement initState
     _textEditingController = TextEditingController();
     _focusNode = FocusNode();
 
@@ -116,27 +118,23 @@ class _InputChatState extends State<_InputChat> {
           Flexible(
             child: TextField(
               controller: _textEditingController,
-              onSubmitted: (String text) {
-                print(text);
-              },
-              onChanged: (String text) {
-                print(text);
-              },
-              decoration: InputDecoration.collapsed(hintText: 'Send...'),
+              onSubmitted: (String text) {},
+              onChanged: (String text) {},
+              decoration: const InputDecoration.collapsed(hintText: 'Send...'),
               focusNode: _focusNode,
             ),
           ),
           Container(
-              margin: EdgeInsets.symmetric(horizontal: 4),
+              margin: const EdgeInsets.symmetric(horizontal: 4),
               child: Platform.isIOS
-                  ? CupertinoButton(child: Text('Send'), onPressed: () {})
+                  ? CupertinoButton(child: const Text('Send'), onPressed: () {})
                   : MaterialButton(
                       onPressed: () {
                         _textEditingController.text.trim().isEmpty
                             ? null
                             : _handleSubmit();
                       },
-                      child: Text('Send'),
+                      child: const Text('Send'),
                     ))
         ]),
       )),

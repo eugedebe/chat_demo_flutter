@@ -1,4 +1,5 @@
 import "package:chat_demo_app/pages/pages.dart";
+import "package:chat_demo_app/pages/redirect.dart";
 import "package:flutter/material.dart";
 
 final Map<String, Widget Function(BuildContext)> appRoutes = {
@@ -7,4 +8,5 @@ final Map<String, Widget Function(BuildContext)> appRoutes = {
   'loading': (_) => LoadingPage(),
   'register': (_) => RegisterPage(),
   'chat': (_) => ChatPage(),
+  'redirect': (_) => Redirect(),
 };
