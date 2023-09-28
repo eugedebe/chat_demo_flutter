@@ -1,5 +1,6 @@
 import 'package:chat_demo_app/pages/pages.dart';
 import 'package:chat_demo_app/services/auth_service.dart';
+import 'package:chat_demo_app/services/socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,11 +23,14 @@ class LoadingPage extends StatelessWidget {
     final authserviceProvider =
         Provider.of<AuthService>(context, listen: false);
     final isAuthenticated = await authserviceProvider.isLoggedIn();
+    final socketService = Provider.of<SocketService>(context, listen: false);
 
     if (isAuthenticated) {
       //todo connect to socket service
       // Navigator.pushReplacementNamed(context, 'users');
       // to avoid animationtransition between page instead of navitaor push replacemennamed we do the following:
+      socketService.connect();
+
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(

@@ -10,12 +10,12 @@ class User {
     required this.uid,
   });
 
-  factory User.fromJson(Map<String, dynamic> userJson) {
+  factory User.FromJson(Map<String, dynamic> userJson) {
     return User(
       email: userJson['email'],
       uid: userJson['uid'],
       name: userJson['name'],
-      online: true,
+      online: userJson['online'],
     );
   }
 }

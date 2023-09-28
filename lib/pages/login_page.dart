@@ -1,5 +1,6 @@
 import 'package:chat_demo_app/helpers/show_alerts.dart';
 import 'package:chat_demo_app/services/auth_service.dart';
+import 'package:chat_demo_app/services/socket_service.dart';
 import 'package:chat_demo_app/widgets/custom_button_1.dart';
 import 'package:chat_demo_app/widgets/custom_input_text_field.dart';
 import 'package:chat_demo_app/widgets/login_labels.dart';
@@ -59,6 +60,8 @@ class __LoginFormState extends State<_LoginForm> {
   @override
   Widget build(BuildContext context) {
     AuthService authServiceProvider = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
+
     return Container(
       margin: EdgeInsets.only(
         top: 20,
@@ -93,6 +96,7 @@ class __LoginFormState extends State<_LoginForm> {
                       emailInputController.text.trim(),
                       passwordInputController.text);
                   if (loginOk) {
+                    socketService.connect();
                     Navigator.pushReplacementNamed(context, 'users');
                   } else {
                     showAlert(

@@ -10,6 +10,6 @@ class LoginResponse {
   factory LoginResponse.fromJson(Map<String, dynamic> jsonData) =>
       LoginResponse(
           ok: jsonData['ok'],
-          user: User.fromJson(jsonData['user']),
+          user: User.FromJson(jsonData['user']),
           token: jsonData['token']);
 }

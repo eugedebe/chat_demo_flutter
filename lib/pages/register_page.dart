@@ -1,5 +1,6 @@
 import 'package:chat_demo_app/helpers/show_alerts.dart';
 import 'package:chat_demo_app/services/auth_service.dart';
+import 'package:chat_demo_app/services/socket_service.dart';
 import 'package:chat_demo_app/widgets/custom_button_1.dart';
 import 'package:chat_demo_app/widgets/custom_input_text_field.dart';
 import 'package:chat_demo_app/widgets/login_labels.dart';
@@ -66,6 +67,8 @@ class __RegisterFormState extends State<_RegisterForm> {
   @override
   Widget build(BuildContext context) {
     final authServiceProvider = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
+
     return Container(
       margin: EdgeInsets.only(
         top: 20,
@@ -108,6 +111,7 @@ class __RegisterFormState extends State<_RegisterForm> {
                       emailInputController.text,
                       passwordInputController.text);
                   if (registerOk) {
+                    socketService.connect();
                     Navigator.pushReplacementNamed(context, 'users');
                   } else {
                     showAlert(
